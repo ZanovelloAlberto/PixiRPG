@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "src/.js",
   "scripts": {
-    "tsc": "tsc; browserify build/main.js > build/index.js; rm build/main.js",
+    "tscb": "tsc; cd build; browserify Main.js > index.js;rm Main.js",
+    "tsc":"rm build/Main.js;tsc",
     "test": "node index.js"
   },
   "author": "",

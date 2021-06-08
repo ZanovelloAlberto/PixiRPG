@@ -1,37 +1,45 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var PIXI = __importStar(require("pixi.js"));
+//import * as PIXI from 'pixi.js';
+var pixi_js_1 = require("pixi.js");
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
-var app = new PIXI.Application();
+var app = new pixi_js_1.Application();
+var characters = pixi_js_1.Texture.from("/res/img/characters.png");
+// Use the native window resolution as the default resolution
+// will support high-density displays when rendering
+pixi_js_1.settings.RESOLUTION = window.devicePixelRatio;
+// Disable interpolation when scaling, will make texture be pixelated
+pixi_js_1.settings.SCALE_MODE = pixi_js_1.SCALE_MODES.NEAREST;
+var app = new pixi_js_1.Application();
 // The application will create a canvas element for you that you
 // can then insert into the DOM
 document.body.appendChild(app.view);
-window.onload = window.onresize = function () {
-    app.view.width = document.body.clientWidth; //document.width is obsolete
-    app.view.height = document.body.clientHeight; //document.height is obsolete
-};
+// load the texture we need
+app.loader.add('bunny', '/res/img/characters.png').load(function (loader, resources) {
+    // This creates a texture from a 'bunny.png' image
+    var bunny = new pixi_js_1.Sprite(new pixi_js_1.Texture(resources.bunny.texture, new pixi_js_1.Rectangle(0, 0, 16, 16)));
+    // Setup the position of the bunny
+    bunny.x = app.renderer.width / 2;
+    bunny.y = app.renderer.height / 2;
+    bunny.width = 100;
+    bunny.height = 100;
+    // Rotate around the center
+    bunny.anchor.x = 0.5;
+    bunny.anchor.y = 0.5;
+    // Add the bunny to the scene we are building
+    app.stage.addChild(bunny);
+    // Listen for frame updates
+    app.ticker.add(function () {
+        // each frame we spin the bunny around a bit
+        bunny.rotation += 0.01;
+    });
+});
+function getChar(i) {
+    return new pixi_js_1.Texture(new pixi_js_1.BaseTexture("char"), new pixi_js_1.Rectangle(0, 0, 16 * 3, 16 * 4));
+}
 
 },{"pixi.js":44}],2:[function(require,module,exports){
 /*!
