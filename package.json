@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "src/.js",
   "scripts": {
+    "lucca": "co",
     "tscb": "tsc; cd build; browserify Main.js > index.js;rm Main.js",
-    "tsc":"rm build/Main.js;tsc",
-    "test": "node index.js"
+    "tsc":"rm build/Main.js;tsc"
+    
   },
   "author": "",
   "license": "ISC",

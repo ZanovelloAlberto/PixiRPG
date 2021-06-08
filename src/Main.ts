@@ -10,8 +10,8 @@ const characters =  Texture.from("/res/img/characters.png");
 
 
 // Use the native window resolution as the default resolution
- // will support high-density displays when rendering
- settings.RESOLUTION = window.devicePixelRatio;
+// will support high-density displays when rendering
+//settings.RESOLUTION = window.devicePixelRatio;
 
  // Disable interpolation when scaling, will make texture be pixelated
  settings.SCALE_MODE = SCALE_MODES.NEAREST;
@@ -21,6 +21,8 @@ var app = new Application();
 // can then insert into the DOM
 document.body.appendChild(app.view);
 // load the texture we need
+//app.loader.
+app.loader.onComplete = 
 app.loader.add('bunny', '/res/img/characters.png').load(function (loader, resources) {
     // This creates a texture from a 'bunny.png' image
     var bunny = new Sprite(new Texture(resources.bunny.texture,new Rectangle(0,0,16,16)));
@@ -40,6 +42,12 @@ app.loader.add('bunny', '/res/img/characters.png').load(function (loader, resour
         bunny.rotation += 0.01;
     });
 });
+
+
+
+function update(){
+
+}
 
 
 
