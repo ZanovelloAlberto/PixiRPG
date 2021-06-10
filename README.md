@@ -22,7 +22,7 @@ PixiRPG
 ```
 
 # Founders
-* Alberto Zanovello
+* [Alberto Zanovello](https://github.com/ZanovelloAlberto/)
 
 # Contributors
 * Bin Hu

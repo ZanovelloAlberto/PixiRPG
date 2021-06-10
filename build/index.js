@@ -55,6 +55,8 @@ class Pixi extends pixi_js_1.Application {
         document.body.appendChild(this.view);
         this.configure();
         this.resizeTo = document.body;
+        this.resize();
+        //this.re
     }
     configure() {
         // Disable interpolation when scaling, will make texture be pixelated
