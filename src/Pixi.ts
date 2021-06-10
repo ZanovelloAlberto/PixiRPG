@@ -6,6 +6,9 @@ export class Pixi extends Application{
         super()
         document.body.appendChild(this.view);
         this.configure();
+        this.resizeTo = document.body;
+        this.resize();
+        //this.re
     }
     configure(){
 

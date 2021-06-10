@@ -1,6 +1,6 @@
 //import * as PIXI from 'pixi.js';
-import { Application, BaseTexture, Rectangle, Resource, SCALE_MODES, settings, Sprite, Texture } from 'pixi.js';
 import { Game } from './Game'
+import { Pixi } from './Pixi';
 import { Res } from './Res'
 
 // The application will create a renderer using WebGL, if possible,
@@ -12,42 +12,21 @@ import { Res } from './Res'
 //settings.RESOLUTION = window.devicePixelRatio;
 
 
+var pixi = new Pixi();
+var loader = new Res();
 
-export class Main{
+var game : Game;
 
-    pixi = new Application();
 
-    loader:Res;
-    
-    game:Game;
+loader.load((loader, resources) => {
+    loader.resource = resources;
+    game = new Game(loader,pixi);
+});
 
-    constructor(){
-
-        this.loader = new Res();
-        this.loader.load((loader, resources) => {
-            loader.resource = resources;
-        });
-
-        document.body.appendChild(this.pixi.view);
-    }
+document.body.appendChild(pixi.view);
 
 
 
-}
-new Main();
-
-
-
-
-
-// The application will create a canvas element for you that you
-// can then insert into the DOM
-
-// load the texture we need
-//app.loader.
-
-
-// DECLARE OBJECTS
 
 
 

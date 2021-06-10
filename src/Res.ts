@@ -1,6 +1,5 @@
 import { Rectangle, Texture, Loader } from "pixi.js";
-import { Game } from "./Game";
-import { Main } from "./Main";
+
 
 export class Res extends Loader{
     
@@ -18,19 +17,8 @@ export class Res extends Loader{
     
     constructor(){
         super();
-        this.add('tile','res/img/basictiles.png');
-        this.add('char','res/img/characters.png');
-
-        this.load((loader, resources) => {
-            this.resource = resources;
-            // resources is an object where the key is the name of the resource loaded and the value is the resource object.
-            // They have a couple default properties:
-            // - `url`: The URL that the resource was loaded from
-            // - `error`: The error that happened when trying to load (if any)
-            // - `data`: The raw data that was loaded
-            // also may contain other properties based on the middleware that runs.
-            
-        });
+        this.add('tile','img/basictiles.png');
+        this.add('char','img/characters.png');
     }
 
 

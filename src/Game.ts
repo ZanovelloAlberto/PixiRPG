@@ -1,24 +1,36 @@
-import { Loader, Texture } from "pixi.js";
+import { DisplayObject, Loader, Texture } from "pixi.js";
+import { ObjectFlags } from "typescript";
 import { Pixi } from "./Pixi";
 import { Player } from "./Player";
 import { Res } from "./Res";
 
 
 export class Game{
-
-    //gameLoop : number;
+    
+    object : Array<DisplayObject> = [];
+    fps : number = 20;
     player : Player;
     pixi : Pixi;
  
-    constructor(loader:Res){
+    constructor(loader:Res,pixi:Pixi){
         
-        this.pixi = new Pixi();
-        this.player = new Player(loader.getChar(0));
+        this.pixi = pixi;
+        this.pixi.stage.removeChildren();
         
-        setInterval(this.update,1000/30);
-    }
-    update(){
 
+        //this.object[0].
+        
+        this.player = new Player(loader.getChar(0));
+        this.player.height = 100;
+        this.player.width = 100;
+
+        pixi.stage.addChild(this.player);
+        
+        setInterval(this.update,1000/this.fps);
+    }
+
+    update = ()=>{
+        this.player.update();
     }
 
 }

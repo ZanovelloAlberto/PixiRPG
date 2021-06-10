@@ -1,9 +1,8 @@
 import { BaseTexture, Rectangle, Sprite, Texture } from 'pixi.js';
 import { isMappedTypeNode, textSpanContainsPosition } from 'typescript';
-export class Player {
+export class Player extends Sprite{
 
-    sprite: Sprite = new Sprite();
-    texture: Array<Texture>;
+    textures: Array<Texture>;
 
     running: boolean = false;
 
@@ -18,14 +17,17 @@ export class Player {
     //  idle
     //  left
 
-    speed: number = 1;
+    speed: number = 15;
 
 
     constructor(images: Array<Texture>) {
 
-        this.texture = images;
-        this.sprite.x = 100;
-        this.sprite.y = 100;
+        super();
+        this.textures = images;
+        this.x = 100;
+        this.y = 100;
+        this.update = this.update;
+        
 
         document.addEventListener("keydown", (ev: KeyboardEvent) => {
 
@@ -67,7 +69,7 @@ export class Player {
 
 
     drawPerson() {
-        this.sprite.texture = this.texture[this.direction * 3 + this.state];
+        this.texture = this.textures[this.direction * 3 + this.state];
     }
 
     update() {
@@ -75,19 +77,19 @@ export class Player {
         if (this.running) {
             switch (this.direction) {
                 case 0:
-                    this.sprite.y += this.speed;
+                    this.y += this.speed;
                     break;
 
                 case 1:
-                    this.sprite.x -= this.speed;
+                    this.x -= this.speed;
                     break;
 
                 case 2:
-                    this.sprite.x += this.speed;
+                    this.x += this.speed;
                     break;
 
                 case 3:
-                    this.sprite.y -= this.speed;
+                    this.y -= this.speed;
                     break;
             }
         }
