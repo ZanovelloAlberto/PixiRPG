@@ -2,15 +2,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //import * as PIXI from 'pixi.js';
-var pixi_js_1 = require("pixi.js");
+const pixi_js_1 = require("pixi.js");
+const Player_1 = require("./Player");
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
 var app = new pixi_js_1.Application();
-var characters = pixi_js_1.Texture.from("/res/img/characters.png");
+const characters = pixi_js_1.Texture.from("/res/img/characters.png");
 // Use the native window resolution as the default resolution
 // will support high-density displays when rendering
-pixi_js_1.settings.RESOLUTION = window.devicePixelRatio;
+//settings.RESOLUTION = window.devicePixelRatio;
 // Disable interpolation when scaling, will make texture be pixelated
 pixi_js_1.settings.SCALE_MODE = pixi_js_1.SCALE_MODES.NEAREST;
 var app = new pixi_js_1.Application();
@@ -18,30 +19,115 @@ var app = new pixi_js_1.Application();
 // can then insert into the DOM
 document.body.appendChild(app.view);
 // load the texture we need
-app.loader.add('bunny', '/res/img/characters.png').load(function (loader, resources) {
+//app.loader.
+// DECLARE OBJECTS
+var player;
+app.loader.add('char', '/res/img/characters.png').load(function (loader, resources) {
     // This creates a texture from a 'bunny.png' image
-    var bunny = new pixi_js_1.Sprite(new pixi_js_1.Texture(resources.bunny.texture, new pixi_js_1.Rectangle(0, 0, 16, 16)));
-    // Setup the position of the bunny
-    bunny.x = app.renderer.width / 2;
-    bunny.y = app.renderer.height / 2;
-    bunny.width = 100;
-    bunny.height = 100;
-    // Rotate around the center
-    bunny.anchor.x = 0.5;
-    bunny.anchor.y = 0.5;
+    player = new Player_1.Player(resources.char.texture);
     // Add the bunny to the scene we are building
-    app.stage.addChild(bunny);
-    // Listen for frame updates
-    app.ticker.add(function () {
-        // each frame we spin the bunny around a bit
-        bunny.rotation += 0.01;
-    });
+    app.stage.addChild(player.sprite);
+    // Listen for frame updat
 });
+setInterval(update, 1000 / 30);
+function update() {
+    player.update();
+}
 function getChar(i) {
     return new pixi_js_1.Texture(new pixi_js_1.BaseTexture("char"), new pixi_js_1.Rectangle(0, 0, 16 * 3, 16 * 4));
 }
 
-},{"pixi.js":44}],2:[function(require,module,exports){
+},{"./Player":2,"pixi.js":45}],2:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Player = void 0;
+const pixi_js_1 = require("pixi.js");
+class Player {
+    constructor(t) {
+        this.sprite = new pixi_js_1.Sprite();
+        this.texture = [];
+        this.speed = 1;
+        this.running = false;
+        this.var = "";
+        //  front
+        //  left
+        //  right
+        //  back
+        this.state = 0;
+        this.sprite.x = 100;
+        this.sprite.y = 100;
+        for (let i = 0; i < 16; i++) {
+            this.texture.push(new pixi_js_1.Texture(t, new pixi_js_1.Rectangle((i % 3) * 16, Math.floor(i / 3) * 16, 16, 16)));
+        }
+        document.addEventListener("keydown", (ev) => {
+            const n = Player.getKey(ev.keyCode);
+            if (n != -1) {
+                this.direction = n;
+                this.running = true;
+            }
+        });
+        document.addEventListener("keyup", (ev) => {
+            const n = Player.getKey(ev.keyCode);
+            if (n != -1) {
+                if (n == this.direction) {
+                    this.running = false;
+                }
+            }
+        });
+        this.direction = 0;
+        setInterval(() => {
+            if (this.running) {
+                if (this.state) {
+                    this.state = 0;
+                }
+                else {
+                    this.state = 2;
+                }
+            }
+            else {
+                this.state = 1;
+            }
+            console.log(this.direction + ":" + this.state + ":" + this.var);
+        }, 200);
+    }
+    //  right
+    //  idle
+    //  left
+    drawPerson() {
+        this.sprite.texture = this.texture[this.direction * 3 + this.state];
+    }
+    update() {
+        if (this.running) {
+            switch (this.direction) {
+                case 0:
+                    this.sprite.y += this.speed;
+                    break;
+                case 1:
+                    this.sprite.x -= this.speed;
+                    break;
+                case 2:
+                    this.sprite.x += this.speed;
+                    break;
+                case 3:
+                    this.sprite.y -= this.speed;
+                    break;
+            }
+        }
+        this.drawPerson();
+    }
+    static getKey(n) {
+        const KeyPair = [40, 37, 39, 38];
+        for (let i = 0; i < KeyPair.length; i++) {
+            if (KeyPair[i] == n) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+exports.Player = Player;
+
+},{"pixi.js":45}],3:[function(require,module,exports){
 /*!
  * @pixi/accessibility - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -595,7 +681,7 @@ exports.AccessibilityManager = AccessibilityManager;
 exports.accessibleTarget = accessibleTarget;
 
 
-},{"@pixi/display":7,"@pixi/utils":36}],3:[function(require,module,exports){
+},{"@pixi/display":8,"@pixi/utils":37}],4:[function(require,module,exports){
 /*!
  * @pixi/app - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -870,7 +956,7 @@ Application.registerPlugin(ResizePlugin);
 exports.Application = Application;
 
 
-},{"@pixi/core":6,"@pixi/display":7}],4:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/display":8}],5:[function(require,module,exports){
 /*!
  * @pixi/compressed-textures - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -2082,7 +2168,7 @@ exports.TYPES_TO_BYTES_PER_COMPONENT = TYPES_TO_BYTES_PER_COMPONENT;
 exports.TYPES_TO_BYTES_PER_PIXEL = TYPES_TO_BYTES_PER_PIXEL;
 
 
-},{"@pixi/constants":5,"@pixi/core":6,"@pixi/loaders":17,"@pixi/utils":36}],5:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/core":7,"@pixi/loaders":18,"@pixi/utils":37}],6:[function(require,module,exports){
 /*!
  * @pixi/constants - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -2252,7 +2338,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })(exports.MSAA_QUALITY || (exports.MSAA_QUALITY = {}));
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /*!
  * @pixi/core - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -13822,7 +13908,7 @@ exports.systems = systems;
 exports.uniformParsers = uniformParsers;
 
 
-},{"@pixi/constants":5,"@pixi/math":18,"@pixi/runner":27,"@pixi/settings":28,"@pixi/ticker":35,"@pixi/utils":36}],7:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/math":19,"@pixi/runner":28,"@pixi/settings":29,"@pixi/ticker":36,"@pixi/utils":37}],8:[function(require,module,exports){
 /*!
  * @pixi/display - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -15766,7 +15852,7 @@ exports.DisplayObject = DisplayObject;
 exports.TemporaryDisplayObject = TemporaryDisplayObject;
 
 
-},{"@pixi/math":18,"@pixi/settings":28,"@pixi/utils":36}],8:[function(require,module,exports){
+},{"@pixi/math":19,"@pixi/settings":29,"@pixi/utils":37}],9:[function(require,module,exports){
 /*!
  * @pixi/extract - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -15985,7 +16071,7 @@ var Extract = /** @class */ (function () {
 exports.Extract = Extract;
 
 
-},{"@pixi/core":6,"@pixi/math":18,"@pixi/utils":36}],9:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/math":19,"@pixi/utils":37}],10:[function(require,module,exports){
 /*!
  * @pixi/filter-alpha - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -16080,7 +16166,7 @@ var AlphaFilter = /** @class */ (function (_super) {
 exports.AlphaFilter = AlphaFilter;
 
 
-},{"@pixi/core":6}],10:[function(require,module,exports){
+},{"@pixi/core":7}],11:[function(require,module,exports){
 /*!
  * @pixi/filter-blur - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -16940,7 +17026,7 @@ exports.BlurFilter = BlurFilter;
 exports.BlurFilterPass = BlurFilterPass;
 
 
-},{"@pixi/core":6,"@pixi/settings":28}],11:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/settings":29}],12:[function(require,module,exports){
 /*!
  * @pixi/filter-color-matrix - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -17478,7 +17564,7 @@ ColorMatrixFilter.prototype.grayscale = ColorMatrixFilter.prototype.greyscale;
 exports.ColorMatrixFilter = ColorMatrixFilter;
 
 
-},{"@pixi/core":6}],12:[function(require,module,exports){
+},{"@pixi/core":7}],13:[function(require,module,exports){
 /*!
  * @pixi/filter-displacement - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -17619,7 +17705,7 @@ var DisplacementFilter = /** @class */ (function (_super) {
 exports.DisplacementFilter = DisplacementFilter;
 
 
-},{"@pixi/core":6,"@pixi/math":18}],13:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/math":19}],14:[function(require,module,exports){
 /*!
  * @pixi/filter-fxaa - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -17689,7 +17775,7 @@ var FXAAFilter = /** @class */ (function (_super) {
 exports.FXAAFilter = FXAAFilter;
 
 
-},{"@pixi/core":6}],14:[function(require,module,exports){
+},{"@pixi/core":7}],15:[function(require,module,exports){
 /*!
  * @pixi/filter-noise - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -17798,7 +17884,7 @@ var NoiseFilter = /** @class */ (function (_super) {
 exports.NoiseFilter = NoiseFilter;
 
 
-},{"@pixi/core":6}],15:[function(require,module,exports){
+},{"@pixi/core":7}],16:[function(require,module,exports){
 /*!
  * @pixi/graphics - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -20968,7 +21054,7 @@ exports.LineStyle = LineStyle;
 exports.graphicsUtils = graphicsUtils;
 
 
-},{"@pixi/constants":5,"@pixi/core":6,"@pixi/display":7,"@pixi/math":18,"@pixi/utils":36}],16:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/core":7,"@pixi/display":8,"@pixi/math":19,"@pixi/utils":37}],17:[function(require,module,exports){
 /*!
  * @pixi/interaction - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -23197,7 +23283,7 @@ exports.InteractionTrackingData = InteractionTrackingData;
 exports.interactiveTarget = interactiveTarget;
 
 
-},{"@pixi/display":7,"@pixi/math":18,"@pixi/ticker":35,"@pixi/utils":36}],17:[function(require,module,exports){
+},{"@pixi/display":8,"@pixi/math":19,"@pixi/ticker":36,"@pixi/utils":37}],18:[function(require,module,exports){
 /*!
  * @pixi/loaders - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -23551,7 +23637,7 @@ exports.LoaderResource = LoaderResource;
 exports.TextureLoader = TextureLoader;
 
 
-},{"@pixi/core":6,"resource-loader":51}],18:[function(require,module,exports){
+},{"@pixi/core":7,"resource-loader":52}],19:[function(require,module,exports){
 /*!
  * @pixi/math - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -25438,7 +25524,7 @@ exports.Transform = Transform;
 exports.groupD8 = groupD8;
 
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /*!
  * @pixi/mesh-extras - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -26178,7 +26264,7 @@ exports.SimplePlane = SimplePlane;
 exports.SimpleRope = SimpleRope;
 
 
-},{"@pixi/constants":5,"@pixi/core":6,"@pixi/mesh":20}],20:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/core":7,"@pixi/mesh":21}],21:[function(require,module,exports){
 /*!
  * @pixi/mesh - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -26911,7 +26997,7 @@ exports.MeshGeometry = MeshGeometry;
 exports.MeshMaterial = MeshMaterial;
 
 
-},{"@pixi/constants":5,"@pixi/core":6,"@pixi/display":7,"@pixi/math":18,"@pixi/settings":28,"@pixi/utils":36}],21:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/core":7,"@pixi/display":8,"@pixi/math":19,"@pixi/settings":29,"@pixi/utils":37}],22:[function(require,module,exports){
 /*!
  * @pixi/mixin-cache-as-bitmap - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -27280,7 +27366,7 @@ display.DisplayObject.prototype._cacheAsBitmapDestroy = function _cacheAsBitmapD
 exports.CacheData = CacheData;
 
 
-},{"@pixi/core":6,"@pixi/display":7,"@pixi/math":18,"@pixi/settings":28,"@pixi/sprite":31,"@pixi/utils":36}],22:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/display":8,"@pixi/math":19,"@pixi/settings":29,"@pixi/sprite":32,"@pixi/utils":37}],23:[function(require,module,exports){
 /*!
  * @pixi/mixin-get-child-by-name - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -27332,7 +27418,7 @@ display.Container.prototype.getChildByName = function getChildByName(name, deep)
 };
 
 
-},{"@pixi/display":7}],23:[function(require,module,exports){
+},{"@pixi/display":8}],24:[function(require,module,exports){
 /*!
  * @pixi/mixin-get-global-position - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -27370,7 +27456,7 @@ display.DisplayObject.prototype.getGlobalPosition = function getGlobalPosition(p
 };
 
 
-},{"@pixi/display":7,"@pixi/math":18}],24:[function(require,module,exports){
+},{"@pixi/display":8,"@pixi/math":19}],25:[function(require,module,exports){
 /*!
  * @pixi/particles - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -28187,7 +28273,7 @@ exports.ParticleContainer = ParticleContainer;
 exports.ParticleRenderer = ParticleRenderer;
 
 
-},{"@pixi/constants":5,"@pixi/core":6,"@pixi/display":7,"@pixi/math":18,"@pixi/utils":36}],25:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/core":7,"@pixi/display":8,"@pixi/math":19,"@pixi/utils":37}],26:[function(require,module,exports){
 /*!
  * @pixi/polyfill - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -28306,7 +28392,7 @@ if (!self.Int32Array) {
 }
 
 
-},{"object-assign":42,"promise-polyfill":46}],26:[function(require,module,exports){
+},{"object-assign":43,"promise-polyfill":47}],27:[function(require,module,exports){
 /*!
  * @pixi/prepare - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -28949,7 +29035,7 @@ exports.Prepare = Prepare;
 exports.TimeLimiter = TimeLimiter;
 
 
-},{"@pixi/core":6,"@pixi/display":7,"@pixi/graphics":15,"@pixi/settings":28,"@pixi/text":34,"@pixi/ticker":35}],27:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/display":8,"@pixi/graphics":16,"@pixi/settings":29,"@pixi/text":35,"@pixi/ticker":36}],28:[function(require,module,exports){
 /*!
  * @pixi/runner - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -29153,7 +29239,7 @@ Object.defineProperties(Runner.prototype, {
 exports.Runner = Runner;
 
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /*!
  * @pixi/settings - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -29902,7 +29988,7 @@ exports.isMobile = isMobile;
 exports.settings = settings;
 
 
-},{"ismobilejs":39}],29:[function(require,module,exports){
+},{"ismobilejs":40}],30:[function(require,module,exports){
 /*!
  * @pixi/sprite-animated - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -30379,7 +30465,7 @@ var AnimatedSprite = /** @class */ (function (_super) {
 exports.AnimatedSprite = AnimatedSprite;
 
 
-},{"@pixi/core":6,"@pixi/sprite":31,"@pixi/ticker":35}],30:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/sprite":32,"@pixi/ticker":36}],31:[function(require,module,exports){
 /*!
  * @pixi/sprite-tiling - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -30795,7 +30881,7 @@ exports.TilingSprite = TilingSprite;
 exports.TilingSpriteRenderer = TilingSpriteRenderer;
 
 
-},{"@pixi/constants":5,"@pixi/core":6,"@pixi/math":18,"@pixi/sprite":31,"@pixi/utils":36}],31:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/core":7,"@pixi/math":19,"@pixi/sprite":32,"@pixi/utils":37}],32:[function(require,module,exports){
 /*!
  * @pixi/sprite - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -31390,7 +31476,7 @@ var Sprite = /** @class */ (function (_super) {
 exports.Sprite = Sprite;
 
 
-},{"@pixi/constants":5,"@pixi/core":6,"@pixi/display":7,"@pixi/math":18,"@pixi/settings":28,"@pixi/utils":36}],32:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/core":7,"@pixi/display":8,"@pixi/math":19,"@pixi/settings":29,"@pixi/utils":37}],33:[function(require,module,exports){
 /*!
  * @pixi/spritesheet - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -31790,7 +31876,7 @@ exports.Spritesheet = Spritesheet;
 exports.SpritesheetLoader = SpritesheetLoader;
 
 
-},{"@pixi/core":6,"@pixi/loaders":17,"@pixi/math":18,"@pixi/utils":36}],33:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/loaders":18,"@pixi/math":19,"@pixi/utils":37}],34:[function(require,module,exports){
 /*!
  * @pixi/text-bitmap - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -33584,7 +33670,7 @@ exports.BitmapFontLoader = BitmapFontLoader;
 exports.BitmapText = BitmapText;
 
 
-},{"@pixi/core":6,"@pixi/display":7,"@pixi/loaders":17,"@pixi/math":18,"@pixi/mesh":20,"@pixi/settings":28,"@pixi/text":34,"@pixi/utils":36}],34:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/display":8,"@pixi/loaders":18,"@pixi/math":19,"@pixi/mesh":21,"@pixi/settings":29,"@pixi/text":35,"@pixi/utils":37}],35:[function(require,module,exports){
 /*!
  * @pixi/text - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -35670,7 +35756,7 @@ exports.TextMetrics = TextMetrics;
 exports.TextStyle = TextStyle;
 
 
-},{"@pixi/core":6,"@pixi/math":18,"@pixi/settings":28,"@pixi/sprite":31,"@pixi/utils":36}],35:[function(require,module,exports){
+},{"@pixi/core":7,"@pixi/math":19,"@pixi/settings":29,"@pixi/sprite":32,"@pixi/utils":37}],36:[function(require,module,exports){
 /*!
  * @pixi/ticker - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -36423,7 +36509,7 @@ exports.Ticker = Ticker;
 exports.TickerPlugin = TickerPlugin;
 
 
-},{"@pixi/settings":28}],36:[function(require,module,exports){
+},{"@pixi/settings":29}],37:[function(require,module,exports){
 /*!
  * @pixi/utils - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -37661,7 +37747,7 @@ exports.uid = uid;
 exports.url = url;
 
 
-},{"@pixi/constants":5,"@pixi/settings":28,"earcut":37,"eventemitter3":38,"url":53}],37:[function(require,module,exports){
+},{"@pixi/constants":6,"@pixi/settings":29,"earcut":38,"eventemitter3":39,"url":54}],38:[function(require,module,exports){
 'use strict';
 
 module.exports = earcut;
@@ -38342,7 +38428,7 @@ earcut.flatten = function (data) {
     return result;
 };
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 
 var has = Object.prototype.hasOwnProperty
@@ -38680,7 +38766,7 @@ if ('undefined' !== typeof module) {
   module.exports = EventEmitter;
 }
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
@@ -38690,7 +38776,7 @@ __export(require("./isMobile"));
 var isMobile_1 = require("./isMobile");
 exports["default"] = isMobile_1["default"];
 
-},{"./isMobile":40}],40:[function(require,module,exports){
+},{"./isMobile":41}],41:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
 var appleIphone = /iPhone/i;
@@ -38819,7 +38905,7 @@ function isMobile(param) {
 }
 exports["default"] = isMobile;
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -38986,7 +39072,7 @@ MiniSignal.MiniSignalBinding = MiniSignalBinding;
 exports['default'] = MiniSignal;
 module.exports = exports['default'];
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -39078,7 +39164,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 'use strict'
 
 function parseURI (str, opts) {
@@ -39129,7 +39215,7 @@ function parseURI (str, opts) {
 
 module.exports = parseURI
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 /*!
  * pixi.js - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -39441,7 +39527,7 @@ exports.VERSION = VERSION;
 exports.filters = filters;
 
 
-},{"@pixi/accessibility":2,"@pixi/app":3,"@pixi/compressed-textures":4,"@pixi/constants":5,"@pixi/core":6,"@pixi/display":7,"@pixi/extract":8,"@pixi/filter-alpha":9,"@pixi/filter-blur":10,"@pixi/filter-color-matrix":11,"@pixi/filter-displacement":12,"@pixi/filter-fxaa":13,"@pixi/filter-noise":14,"@pixi/graphics":15,"@pixi/interaction":16,"@pixi/loaders":17,"@pixi/math":18,"@pixi/mesh":20,"@pixi/mesh-extras":19,"@pixi/mixin-cache-as-bitmap":21,"@pixi/mixin-get-child-by-name":22,"@pixi/mixin-get-global-position":23,"@pixi/particles":24,"@pixi/polyfill":25,"@pixi/prepare":26,"@pixi/runner":27,"@pixi/settings":28,"@pixi/sprite":31,"@pixi/sprite-animated":29,"@pixi/sprite-tiling":30,"@pixi/spritesheet":32,"@pixi/text":34,"@pixi/text-bitmap":33,"@pixi/ticker":35,"@pixi/utils":36}],45:[function(require,module,exports){
+},{"@pixi/accessibility":3,"@pixi/app":4,"@pixi/compressed-textures":5,"@pixi/constants":6,"@pixi/core":7,"@pixi/display":8,"@pixi/extract":9,"@pixi/filter-alpha":10,"@pixi/filter-blur":11,"@pixi/filter-color-matrix":12,"@pixi/filter-displacement":13,"@pixi/filter-fxaa":14,"@pixi/filter-noise":15,"@pixi/graphics":16,"@pixi/interaction":17,"@pixi/loaders":18,"@pixi/math":19,"@pixi/mesh":21,"@pixi/mesh-extras":20,"@pixi/mixin-cache-as-bitmap":22,"@pixi/mixin-get-child-by-name":23,"@pixi/mixin-get-global-position":24,"@pixi/particles":25,"@pixi/polyfill":26,"@pixi/prepare":27,"@pixi/runner":28,"@pixi/settings":29,"@pixi/sprite":32,"@pixi/sprite-animated":30,"@pixi/sprite-tiling":31,"@pixi/spritesheet":33,"@pixi/text":35,"@pixi/text-bitmap":34,"@pixi/ticker":36,"@pixi/utils":37}],46:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -39627,7 +39713,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 (function (setImmediate){(function (){
 'use strict';
 
@@ -39955,7 +40041,7 @@ Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
 module.exports = Promise;
 
 }).call(this)}).call(this,require("timers").setImmediate)
-},{"timers":52}],47:[function(require,module,exports){
+},{"timers":53}],48:[function(require,module,exports){
 (function (global){(function (){
 /*! https://mths.be/punycode v1.3.2 by @mathias */
 ;(function(root) {
@@ -40489,7 +40575,7 @@ module.exports = Promise;
 }(this));
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -40575,7 +40661,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -40662,13 +40748,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":48,"./encode":49}],51:[function(require,module,exports){
+},{"./decode":49,"./encode":50}],52:[function(require,module,exports){
 /*!
  * resource-loader - v3.0.1
  * https://github.com/pixijs/pixi-sound
@@ -43019,7 +43105,7 @@ exports.encodeBinary = encodeBinary;
 exports.middleware = index;
 
 
-},{"mini-signals":41,"parse-uri":43}],52:[function(require,module,exports){
+},{"mini-signals":42,"parse-uri":44}],53:[function(require,module,exports){
 (function (setImmediate,clearImmediate){(function (){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -43098,7 +43184,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":45,"timers":52}],53:[function(require,module,exports){
+},{"process/browser.js":46,"timers":53}],54:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -43832,7 +43918,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":54,"punycode":47,"querystring":50}],54:[function(require,module,exports){
+},{"./util":55,"punycode":48,"querystring":51}],55:[function(require,module,exports){
 'use strict';
 
 module.exports = {

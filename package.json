@@ -4,7 +4,7 @@
   "main": "src/.js",
   "scripts": {
     "lucca": "co",
-    "tscb": "tsc; cd build; browserify Main.js > index.js;rm Main.js",
+    "tscb": "tsc; cd build; browserify class/Main.js > index.js;rm -r class",
     "tsc":"rm build/Main.js;tsc"
     
   },

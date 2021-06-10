@@ -20,3 +20,12 @@ PixiRPG
 └─ tsconfig.json
 
 ```
+
+# FONDATORI
+* Alberto Zanovello
+
+# CONTRIBUTORI
+* Bin Hu
+* Gianluca Beltrame
+* Riccardo Bragagnolo
+* Nicolò Trinca

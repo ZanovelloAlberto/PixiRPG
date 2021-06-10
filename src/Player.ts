@@ -1,66 +1,79 @@
 import { BaseTexture, Rectangle, Sprite, Texture } from 'pixi.js';
-import { textSpanContainsPosition } from 'typescript';
-class Player {
+import { isMappedTypeNode, textSpanContainsPosition } from 'typescript';
+export class Player {
 
-    sprite: Sprite;
-    texture: Array<Texture> = [];
-    speed: number = 35;
-    running:boolean = false;
+    sprite: Sprite = new Sprite();
+    texture: Array<Texture>;
 
-    constructor(t: BaseTexture) {
-        
-        for (let i = 0; i < 16; i++) {
-            this.texture.push(new Texture(t,new Rectangle(i%3*16,i/3*16,16,16)))
-        }
-        document.addEventListener("keydown", keyDown);
-        document.addEventListener("keyup", keyUp);
+    running: boolean = false;
 
-        setInterval(() => {
-            if (this.running) {
-              if (this.state) {
-                this.state = 0;
-              } else {
-                this.state = 2;
-              }
-            } else {
-              this.state = 1;
-            }
-        }, 200);
-    }
-    direction: number = 0 | 1 | 2 | 3;
+    direction: number = 0;
     //  front
     //  left
     //  right
     //  back
 
-    state: number = 0 | 1 | 2;
-    //  right leg
+    state: number = 0;
+    //  right
     //  idle
-    //  left leg
+    //  left
+
+    speed: number = 1;
 
 
-    drawPerson(Person) {
-        this.sprite.texture = new Texture(new BaseTexture(this.texture), new Rectangle(0, 0, 0, 0))
-    }
+    constructor(images: Array<Texture>) {
 
-    keyUp(ev:KeyboardEvent) {
-        if (this.keypair(ev.keyCode) == this.direction) {
-           this.running = false;
-        }
-    }
+        this.texture = images;
+        this.sprite.x = 100;
+        this.sprite.y = 100;
+
+        document.addEventListener("keydown", (ev: KeyboardEvent) => {
+
+            const n = Player.getKey(ev.keyCode);
+            if (n != -1) {
+                this.direction = n;
+                this.running = true;
+            }
     
-    keyDown(ev : KeyboardEvent) {
+        });
+        document.addEventListener("keyup", (ev: KeyboardEvent)=> {
 
-        if (!this.running) {
+            const n = Player.getKey(ev.keyCode);
+            if (n != -1) {
+                if (n == this.direction) {
+                    this.running = false;
+    
+                }
+            }
+    
+        });
 
-            this.running = true;
-            this.direction = this.keypair(ev.keyCode);
-        }
+        setInterval(() => {
+
+
+            if (this.running) {
+                if (this.state) {
+                    this.state = 0;
+                } else {
+                    this.state = 2;
+                }
+            } else {
+                this.state = 1;
+            }
+    
+        }, 200);
+    }
+
+
+
+    drawPerson() {
+        this.sprite.texture = this.texture[this.direction * 3 + this.state];
     }
 
     update() {
-        if (hero.running) {
-            switch (hero.direction) {
+
+        if (this.running) {
+            switch (this.direction) {
                 case 0:
                     this.sprite.y += this.speed;
                     break;
@@ -78,23 +91,22 @@ class Player {
                     break;
             }
         }
-        this.sprite.texture = this.texture[this.direction*3 + this.state]
+        this.drawPerson();
+
     }
+    static getKey(n: number): number {
 
-    keypair(x : number): 1 | 0 | 2 | 3 {
-        switch(x){
-                case 37:
-                    return 1;
-
-                case 38:
-                    return 3;
-
-                case 39:
-                    return 2;
-
-                case 40:
-                    return 0;
+        const KeyPair = [40, 37, 39, 38];
+        for (let i = 0; i < KeyPair.length; i++) {
+            if (KeyPair[i] == n) {
+                return i;
+            }
         }
-        return 0;
+        return -1;
+
     }
+
+
+
+
 }
