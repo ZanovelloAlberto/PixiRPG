@@ -21,10 +21,10 @@ PixiRPG
 
 ```
 
-# FONDATORI
+# Founders
 * Alberto Zanovello
 
-# CONTRIBUTORI
+# Contributors
 * Bin Hu
 * Gianluca Beltrame
 * Riccardo Bragagnolo
