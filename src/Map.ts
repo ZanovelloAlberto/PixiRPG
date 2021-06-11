@@ -14,7 +14,7 @@ export class TileMap extends Container {
     constructor(loader: Res,map :Array<number>) {
         super();
         this.tileNumeber = 4;
-
+        
 
     }
     public parse(loader: Res,map :Array<number>){

@@ -1,8 +1,8 @@
 //import * as PIXI from 'pixi.js';
+
 import { Game } from './Game'
 import { Pixi } from './Pixi';
 import { Res } from './Res'
-
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
@@ -11,17 +11,22 @@ import { Res } from './Res'
 // will support high-density displays when rendering
 //settings.RESOLUTION = window.devicePixelRatio;
 
-
 var pixi = new Pixi();
-var loader = new Res();
+
+
+
 
 var game : Game;
 
 
-loader.load((loader, resources) => {
-    loader.resource = resources;
-    game = new Game(loader,pixi);
-});
+Res.finished = ()=>{
+
+    game = new Game();
+    pixi.stage.addChild(game);
+    console.log("worked");
+
+}
+var loader = new Res();
 
 document.body.appendChild(pixi.view);
 

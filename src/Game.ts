@@ -1,31 +1,30 @@
-import { DisplayObject, Loader, Texture } from "pixi.js";
-import { ObjectFlags } from "typescript";
-import { Pixi } from "./Pixi";
+import { Container, DisplayObject, Loader, Texture } from "pixi.js";
+import { NetPlayer } from "./NetPlayer";
 import { Player } from "./Player";
 import { Res } from "./Res";
 
 
-export class Game{
+export class Game extends Container{
     
     object : Array<DisplayObject> = [];
     fps : number = 20;
     player : Player;
-    pixi : Pixi;
- 
-    constructor(loader:Res,pixi:Pixi){
-        
-        this.pixi = pixi;
-        this.pixi.stage.removeChildren();
+    net:NetPlayer
+    
+    
+    constructor(){
+        super();
         
 
         //this.object[0].
         
-        this.player = new Player(loader.getChar(0));
-        this.player.height = 100;
-        this.player.width = 100;
+        this.player = new Player(Res.getChar(0));
+        this.net = new NetPlayer(this.player)
 
-        pixi.stage.addChild(this.player);
-        
+        this.addChild(this.player,this.net);
+
+
+
         setInterval(this.update,1000/this.fps);
     }
 

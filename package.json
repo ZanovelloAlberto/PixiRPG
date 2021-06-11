@@ -5,15 +5,18 @@
   "scripts": {
     "lucca": "co",
     "tscb": "tsc; cd build; browserify class/Main.js > index.js;rm -r class",
-    "tsc":"rm build/Main.js;tsc"
-    
+    "tsc": "rm build/Main.js;tsc"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "browserify": "^17.0.0",
+    "install": "^0.13.0",
+    "net": "^1.0.2",
+    "npm": "^7.17.0",
     "pixi.js": "^6.0.4",
+    "socket.io": "^4.1.2",
     "tsc": "^2.0.3",
     "typescript": "^4.3.2"
   }

@@ -1,6 +1,6 @@
 .git
 node_modules
-trash
+test
 package-lock.json
 build
 .vscode

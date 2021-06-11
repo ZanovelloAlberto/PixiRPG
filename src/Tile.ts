@@ -1,9 +1,8 @@
 import { DisplayObject } from "pixi.js";
 
 
-export class Tile extends DisplayObject{
+export class Tile{
     constructor(){
-        super()
-        
+
     }
 }
