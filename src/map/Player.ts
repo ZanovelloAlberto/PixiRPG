@@ -1,6 +1,10 @@
+/*
+
+*/
+
 import { BaseTexture, Rectangle, Sprite, Texture } from 'pixi.js';
-import { isMappedTypeNode, textSpanContainsPosition } from 'typescript';
-export class Player extends Sprite{
+
+export class Player extends Sprite {
 
     textures: Array<Texture>;
 
@@ -17,17 +21,21 @@ export class Player extends Sprite{
     //  idle
     //  left
 
-    speed: number = 15;
+    speed: number = 2;
 
 
     constructor(images: Array<Texture>) {
 
-        super();
-        this.textures = images;
-        this.x = 100;
-        this.y = 100;
-        this.update = this.update;
         
+        super();
+        
+        this.textures = images;
+        this.x = 0;
+        this.y = 0;
+        //this.pivot.x = this.width/2
+        //this.pivot.y = this.height/2
+        this.texture = images[0]
+
 
         document.addEventListener("keydown", (ev: KeyboardEvent) => {
 
@@ -36,18 +44,18 @@ export class Player extends Sprite{
                 this.direction = n;
                 this.running = true;
             }
-    
+
         });
-        document.addEventListener("keyup", (ev: KeyboardEvent)=> {
+        document.addEventListener("keyup", (ev: KeyboardEvent) => {
 
             const n = Player.getKey(ev.keyCode);
             if (n != -1) {
                 if (n == this.direction) {
                     this.running = false;
-    
+
                 }
             }
-    
+
         });
 
         setInterval(() => {
@@ -62,7 +70,7 @@ export class Player extends Sprite{
             } else {
                 this.state = 1;
             }
-    
+
         }, 200);
     }
 
@@ -70,10 +78,11 @@ export class Player extends Sprite{
 
     drawPerson() {
         this.texture = this.textures[this.direction * 3 + this.state];
+        //console.log(this.x,this.y)
     }
 
-    update() {
-
+    update = ()=> {
+        //console.log("iter")
         if (this.running) {
             switch (this.direction) {
                 case 0:
@@ -94,6 +103,7 @@ export class Player extends Sprite{
             }
         }
         this.drawPerson();
+        
 
     }
     static getKey(n: number): number {
@@ -101,6 +111,7 @@ export class Player extends Sprite{
         const KeyPair = [40, 37, 39, 38];
         for (let i = 0; i < KeyPair.length; i++) {
             if (KeyPair[i] == n) {
+                console.log("changed dir")
                 return i;
             }
         }

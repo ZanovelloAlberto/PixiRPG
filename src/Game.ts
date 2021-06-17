@@ -1,35 +1,45 @@
-import { Container, DisplayObject, Loader, Texture } from "pixi.js";
-import { NetPlayer } from "./NetPlayer";
-import { Player } from "./Player";
+/*
+    Tutto cio che è contenuto nella classe game è conivolto dalla ridimensione della finestra
+*/
+
+
+
+import { Container, DisplayObject, Sprite } from "pixi.js";
+
+import { Map } from "./map/Map";
+import { Player } from "./map/Player";
+import { Pixi } from "./Pixi";
 import { Res } from "./Res";
 
 
-export class Game extends Container{
-    
-    object : Array<DisplayObject> = [];
-    fps : number = 20;
-    player : Player;
-    net:NetPlayer
-    
-    
-    constructor(){
+export class Game extends Container {
+
+
+    fps: number = 20;
+    map: Map;
+
+
+
+    constructor(pixi: Pixi) {
         super();
-        
+        this.map = new Map();
 
-        //this.object[0].
-        
-        this.player = new Player(Res.getChar(0));
-        this.net = new NetPlayer(this.player)
-
-        this.addChild(this.player,this.net);
+        //this.object[0]
+        this.addChild(this.map)
 
 
 
-        setInterval(this.update,1000/this.fps);
+
+
+
+        setInterval(this.update, 1000 / this.fps);
     }
+    update = () => {
+        this.map.update();
 
-    update = ()=>{
-        this.player.update();
     }
+}           
+    
 
-}
+
+
