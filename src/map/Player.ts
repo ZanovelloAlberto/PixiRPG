@@ -3,6 +3,7 @@
 */
 
 import { BaseTexture, Rectangle, Sprite, Texture } from 'pixi.js';
+import { textSpanIntersectsWithPosition } from 'typescript';
 
 export class Player extends Sprite {
 
@@ -30,8 +31,8 @@ export class Player extends Sprite {
         super();
         
         this.textures = images;
-        this.x = 0;
-        this.y = 0;
+        this.x = 50;
+        this.y = 50;
         //this.pivot.x = this.width/2
         //this.pivot.y = this.height/2
         this.texture = images[0]
@@ -58,25 +59,24 @@ export class Player extends Sprite {
 
         });
 
-        setInterval(() => {
+    }
 
+    setState = ()=>{
+        if(this.running){
+            this.state = ((Math.floor(Date.now()/150))%3)
+            
 
-            if (this.running) {
-                if (this.state) {
-                    this.state = 0;
-                } else {
-                    this.state = 2;
-                }
-            } else {
-                this.state = 1;
-            }
-
-        }, 200);
+        }else{
+            
+            this.state = 1;
+        }
+        // console.log(this.state)
+        
     }
 
 
 
-    drawPerson() {
+    setTexture() {
         this.texture = this.textures[this.direction * 3 + this.state];
         //console.log(this.x,this.y)
     }
@@ -102,7 +102,8 @@ export class Player extends Sprite {
                     break;
             }
         }
-        this.drawPerson();
+        this.setState()
+        this.setTexture()
         
 
     }
@@ -116,10 +117,5 @@ export class Player extends Sprite {
             }
         }
         return -1;
-
     }
-
-
-
-
 }

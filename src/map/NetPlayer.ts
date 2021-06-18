@@ -4,6 +4,7 @@
     Segnalare gli utenti disconnessi
     Aggiornare fornendo la posizione successiva, basandosi sulla posizione precedente calcolare l animazione
 
+
 */
 
 import { Container, Sprite } from "pixi.js";
@@ -20,7 +21,7 @@ export class NetPlayer extends Container {
     constructor(p: Player) {
         super();
         this.player = p;
-        this.socket = new WebSocket("ws://79.54.38.22:4000");
+        this.socket = new WebSocket("ws://79.54.246.112:4000");
         this.socket.onmessage = (event: any) => {
             this.parse(event.data)
         };
@@ -31,8 +32,11 @@ export class NetPlayer extends Container {
 
 
     update = () => {
-        const a = getUser(this.player)
-        this.socket.send(a);
+        if(this.socket.readyState == WebSocket.OPEN ){
+            const a = getUser(this.player)
+            this.socket.send(a);
+        }
+
  
     }
 
