@@ -5,11 +5,12 @@
 
 
 import { Container, DisplayObject, Sprite } from "pixi.js";
+import { pixi } from "../Main";
 
 import { Map } from "./map/Map";
 import { Player } from "./map/Player";
-import { Pixi } from "./Pixi";
-import { Res } from "./Res";
+import { Pixi } from "../Pixi";
+import { Res } from "../Res";
 
 
 export class Game extends Container {
@@ -20,7 +21,7 @@ export class Game extends Container {
 
 
 
-    constructor(pixi: Pixi) {
+    constructor() {
         super();
         this.map = new Map();
 
@@ -37,6 +38,12 @@ export class Game extends Container {
     update = () => {
         this.map.update();
 
+    }
+    static start = ():Game=>{
+        pixi.stage.removeChildren(0);
+        const game = new Game();
+        pixi.stage.addChild(game);
+        return game;
     }
 }           
     

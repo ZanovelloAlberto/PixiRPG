@@ -4,6 +4,7 @@
 
 import { BaseTexture, Rectangle, Sprite, Texture } from 'pixi.js';
 import { textSpanIntersectsWithPosition } from 'typescript';
+import { Res } from '../../Res';
 
 export class Player extends Sprite {
 
@@ -24,18 +25,16 @@ export class Player extends Sprite {
 
     speed: number = 2;
 
+    static char:number = 0;
 
-    constructor(images: Array<Texture>) {
-
-        
+    constructor() {
+ 
         super();
-        
-        this.textures = images;
-        this.x = 50;
-        this.y = 50;
-        //this.pivot.x = this.width/2
-        //this.pivot.y = this.height/2
-        this.texture = images[0]
+        this.textures = Res.getChar(Player.char)
+        this.x = 0;
+        this.y = 0;
+        this.anchor.set(0.5,0.8)
+        this.texture = this.textures[0]
 
 
         document.addEventListener("keydown", (ev: KeyboardEvent) => {

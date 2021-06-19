@@ -1,6 +1,6 @@
 import { ArrayResource, Container } from "pixi.js"
 import { Tile } from "./Tile"
-import { ObjMap, Res } from "../Res"
+import { ObjMap, Res } from "../../Res"
 
 export class TileCollector extends Container{
     

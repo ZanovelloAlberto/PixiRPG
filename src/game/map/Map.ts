@@ -3,10 +3,10 @@
     
 */
 import { Container, DisplayObject, Sprite, TilingSprite } from "pixi.js";
-import { Pixi } from "../Pixi";
+import { Pixi } from "../../Pixi";
 
 import { NetPlayer } from './NetPlayer'
-import { Res } from "../Res";
+import { Res } from "../../Res";
 import { TileCollector } from "./TileCollector";
 import { Player } from "./Player";
 import { Tile } from "./Tile";
@@ -30,7 +30,7 @@ export class Map extends Container {
         Map.tiles = new TileCollector("sqare");
         this.addChild(Map.tiles)
 
-        this.player = new Player(Res.getChar(5));
+        this.player = new Player();
         this.addChild(this.player);
         Map.net = new NetPlayer(this.player)
         this.addChild(Map.net)

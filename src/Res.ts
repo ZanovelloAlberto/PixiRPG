@@ -1,4 +1,5 @@
 import { Rectangle, Texture, Loader } from "pixi.js";
+import { MainMenu } from "./mainMenu/MainMenu";
 
 
 export class Res extends Loader {
@@ -14,11 +15,11 @@ export class Res extends Loader {
         for (let i = 0; i < 12; i++) {
             r.push(new Texture(Res.resource.char.texture, new Rectangle(vx+(i % 3) * 16,vy + (Math.floor(i / 3) * 16), 16, 16)));
         }
-        console.log(Math.floor(c / 4)*16*4)
+        // console.log(Math.floor(c / 4)*16*4)
         return r;
 
     }
-    static startx = () => { }
+    
 
     constructor() {
         super();
@@ -28,8 +29,8 @@ export class Res extends Loader {
         this.add('sqare', 'Maps/sqare.json')
         this.load((loader, resources) => {
             Res.resource = resources;
-            setTimeout(Res.startx,1000)
-            //aRes.finished();
+            setTimeout(MainMenu.start,2000)
+            
         })
     }
 

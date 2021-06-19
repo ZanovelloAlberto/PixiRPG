@@ -9,7 +9,7 @@
 
 import { Container, Sprite } from "pixi.js";
 import { Player } from './Player'
-import { Res } from "../Res";
+import { Res } from "../../Res";
 export class NetPlayer extends Container {
 
     player: Player;

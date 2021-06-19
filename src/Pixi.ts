@@ -12,7 +12,10 @@ export class Pixi extends Application{
         })
         document.body.appendChild(this.view);
 
+        settings.RESOLUTION = window.devicePixelRatio;
 
+        // Disable interpolation when scaling, will make texture be pixelated
+        settings.SCALE_MODE = SCALE_MODES.NEAREST
 
 
     }

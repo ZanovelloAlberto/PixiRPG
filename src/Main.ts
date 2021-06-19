@@ -1,4 +1,4 @@
-import { Game } from './Game'
+import { Game } from './game/Game'
 import { Pixi } from './Pixi';
 import { Res } from './Res'
 import { Loading } from './Loading'
@@ -9,19 +9,15 @@ import { Loading } from './Loading'
 // Use the native window resolution as the default resolution
 // will support high-density displays when rendering
 //settings.RESOLUTION = window.devicePixelRatio;
+
+
 window.WebGL2RenderingContext.NEAREST
-var pixi =  new Pixi();
+export var pixi =  new Pixi();
 
 var game : Game;
 
 
-Res.startx = ()=>{
 
-    pixi.stage.removeChildren(0);
-    game = new Game(pixi);
-    pixi.stage.addChild(game);
-
-}
 const loader = new Res();
 const Load = new Loading(pixi.stage)
 

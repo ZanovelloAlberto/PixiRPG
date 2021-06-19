@@ -26,6 +26,6 @@ PixiRPG
 
 # Contributors
 * Bin Hu
-* Gianluca Beltrame
+* [Gianluca Beltrame](https://github.com/GianlucaBeltrame)
 * Riccardo Bragagnolo
-* Nicolò Trinca
+* [Nicolò Trinca](https://github.com/nikxtr)
