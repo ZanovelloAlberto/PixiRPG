@@ -2,6 +2,7 @@
   "name": "pixirpg",
   "version": "1.0.0",
   "main": "src/.js",
+  "github":"https://github.com/ZanovelloAlberto/PixiRPG",
   "scripts": {
     "lucca": "co",
     "tscb": "tsc; cd build; browserify class/Main.js > index.js;rm -r class",
