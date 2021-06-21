@@ -9,17 +9,37 @@ PixiRPG
 ├─ README.md
 ├─ package.json
 ├─ res
+│  ├─ Maps
+│  │  └─ sqare.json
 │  ├─ img
 │  │  ├─ basictiles.png
 │  │  └─ characters.png
-│  └─ index.html
+│  ├─ index.html
+│  └─ js
+│     └─ mapCreator.js
 ├─ src
-│  ├─ Loader.ts
+│  ├─ Loading.ts
 │  ├─ Main.ts
-│  └─ Player.ts
+│  ├─ Pixi.ts
+│  ├─ Res.ts
+│  ├─ game
+│  │  ├─ Game.ts
+│  │  └─ map
+│  │     ├─ Map.ts
+│  │     ├─ NetPlayer.ts
+│  │     ├─ Player.ts
+│  │     ├─ Tile.ts
+│  │     └─ TileCollector.ts
+│  ├─ mainMenu
+│  │  ├─ CharChoose.ts
+│  │  ├─ LoginBtn.ts
+│  │  └─ MainMenu.ts
+│  └─ tool
+│     └─ Image.ts
 └─ tsconfig.json
 
 ```
+
 
 # Founders
 * [Alberto Zanovello](https://github.com/ZanovelloAlberto/)
@@ -29,3 +49,4 @@ PixiRPG
 * [Gianluca Beltrame](https://github.com/GianlucaBeltrame)
 * Riccardo Bragagnolo
 * [Nicolò Trinca](https://github.com/nikxtr)
+
