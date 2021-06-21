@@ -17,7 +17,7 @@ export class Map extends Container {
 
 
 
-    player : Player;
+    static player : Player;
     static tiles : TileCollector
     static net:NetPlayer
 
@@ -30,12 +30,12 @@ export class Map extends Container {
         Map.tiles = new TileCollector("sqare");
         this.addChild(Map.tiles)
 
-        this.player = new Player();
-        this.addChild(this.player);
-        Map.net = new NetPlayer(this.player)
+        Map.player = new Player();
+        this.addChild(Map.player);
+        Map.net = new NetPlayer(Map.player)
         this.addChild(Map.net)
-        this.x = -this.player.x + Pixi.width/2
-        this.y = -this.player.y + Pixi.width/2
+        this.x = -Map.player.x + Pixi.width/2
+        this.y = -Map.player.y + Pixi.width/2
 
  
 
@@ -46,12 +46,12 @@ export class Map extends Container {
 
     update = ()=>{
         
-        this.player.update();
+        Map.player.update();
 
         //console.log(Map.tiles.getTile(1,10).nvalue)
         
-        this.x = -this.player.x + Pixi.width/2
-        this.y = -this.player.y + Pixi.width/2
+        this.x = -Map.player.x + Pixi.width/2
+        this.y = -Map.player.y + Pixi.width/2
         if(Map.net){
             Map.net.update()
         }

@@ -5,6 +5,7 @@
 import { BaseTexture, Rectangle, Sprite, Texture } from 'pixi.js';
 import { textSpanIntersectsWithPosition } from 'typescript';
 import { Res } from '../../Res';
+import { Map } from '../map/Map'
 
 export class Player extends Sprite {
 
@@ -31,8 +32,8 @@ export class Player extends Sprite {
  
         super();
         this.textures = Res.getChar(Player.char)
-        this.x = 0;
-        this.y = 0;
+        this.x = 50;
+        this.y = 50;
         this.anchor.set(0.5,0.8)
         this.texture = this.textures[0]
 
@@ -82,6 +83,8 @@ export class Player extends Sprite {
 
     update = ()=> {
         //console.log("iter")
+        const x = this.x
+        const y = this.y
         if (this.running) {
             switch (this.direction) {
                 case 0:
@@ -100,6 +103,11 @@ export class Player extends Sprite {
                     this.y -= this.speed;
                     break;
             }
+        }
+
+        if(!Map.tiles.getTile(Math.floor(this.x/16),Math.floor(this.y/16)).walk ){
+            this.x = x
+            this.y = y
         }
         this.setState()
         this.setTexture()
