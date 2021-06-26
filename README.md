@@ -1,4 +1,4 @@
-# PIXI.JS ALBERTO TEMLPLATE
+# PIXI.JS ALBERTO GAME
 * write typescritpt code on folder "/src"
 * compile typescript running 'npm run tscb'
 * open html file "/res/index" to visualize the contente of the page
