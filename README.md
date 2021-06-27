@@ -55,7 +55,7 @@ PixiRPG
 All image both characters and tiles are 16 X 16 
 ## Tiles
 <p>here the tile that can be used to create a JavaScript Object Notation map, 
-that should be placed in the ```/res/maps/*name_map*.json``` folder.</p>
+that should be placed in the _/res/maps/*name_map*.json_ folder.</p>
 <img src="res/img/basictiles.png"></img>
 ### structure of the json
 
