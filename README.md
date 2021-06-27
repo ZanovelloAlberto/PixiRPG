@@ -77,5 +77,6 @@ that should be placed in the ```/res/maps/*name_map*.json``` folder.
 
 ## Characters
 <img src="res/img/characters.png"></img>
-chracates are already fully implemented, look at [Player](src/Res.ts).ts and [Res.ts](src/game/map/Player.ts) for implementation 
+
+<p>chracates are already fully implemented, look at [Player](src/Res.ts).ts and [Res.ts](src/game/map/Player.ts) for implementation </p>
 
