@@ -53,4 +53,4 @@ PixiRPG
 
 # Image of Game
 <img src="res/img/basictiles.png"></img>
-<img src="res/img/chararcters.png"></img>
+<img src="res/img/characters.png"></img>
