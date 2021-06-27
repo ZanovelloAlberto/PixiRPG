@@ -50,3 +50,6 @@ PixiRPG
 * Riccardo Bragagnolo
 * [Nicolò Trinca](https://github.com/nikxtr)
 
+
+# Image of Game
+(res/img/basictiles.png)
