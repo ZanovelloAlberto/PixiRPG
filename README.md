@@ -55,14 +55,21 @@ PixiRPG
 All image both characters and tiles are 16 X 16 
 ## Tiles
 here the tile that can be used to create a JavaScript Object Notation map, 
-that should be placed in the '''/res/maps/*name_map*.json''' folder.
+that should be placed in the ```/res/maps/*name_map*.json``` folder.
 <img src="res/img/basictiles.png"></img>
 ### structure of the json
+
+cell placed as base
+tell the game where the player can move
+cell will draw over backgroud
+
 * cell_height
 * cell_width 
-* backgroud_layer   // cell placed as base
-* walk_layer        // tell the game where the player can move
-* objects_layer     // cell will draw over backgroud
+* backgroud_layer   
+* walk_layer        
+* objects_layer     
+
+
 
 
 
