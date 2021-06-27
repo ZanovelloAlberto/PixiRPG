@@ -52,4 +52,4 @@ PixiRPG
 
 
 # Image of Game
-(res/img/basictiles.png)
+<img src="res/img/basictiles.png"></img>
