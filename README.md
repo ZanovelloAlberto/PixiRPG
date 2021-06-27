@@ -59,8 +59,11 @@ that should be placed in the ```/res/maps/*name_map*.json``` folder.
 <img src="res/img/basictiles.png"></img>
 ### structure of the json
 
-cell placed as base.
+<p>cell placed as base.</p>
+<p>tell the game where the player can move.</p>
 tell the game where the player can move.
+<p>cell will draw over backgroud.</p>
+
 cell will draw over backgroud.
 
 * cell_height
