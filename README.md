@@ -62,7 +62,7 @@ that should be placed in the _/res/maps/*name_map*.json_ folder.</p>
 
 <img src="res/img/basictiles.png"></img>
 
-### structure of the json
+### structure of the map
 
 <p>cell placed as base.</p>
 <p>tell the game where the player can move.</p>
