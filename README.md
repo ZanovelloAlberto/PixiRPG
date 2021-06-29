@@ -4,7 +4,7 @@
 * compile typescript running 'npm run tscb'
 * open html file "/res/index" to visualize the contente of the page
 ----
-
+### Folder Struct
 ```
 PixiRPG
 ├─ README.md
