@@ -1,8 +1,9 @@
 # PIXI.JS ALBERTO GAME
+### Compile
 * write typescritpt code on folder "/src"
 * compile typescript running 'npm run tscb'
 * open html file "/res/index" to visualize the contente of the page
-
+----
 
 ```
 PixiRPG
