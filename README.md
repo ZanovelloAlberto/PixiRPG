@@ -1,4 +1,4 @@
-# PIXI.JS ALBERTO GAME
+# PIXI.JS GAME
 ### Compile
 * write typescritpt code on folder "/src"
 * compile typescript running 'npm run tscb'
