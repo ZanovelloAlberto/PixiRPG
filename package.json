@@ -4,11 +4,10 @@
   "main": "src/.js",
   "github":"https://github.com/ZanovelloAlberto/PixiRPG",
   "scripts": {
-    "lucca": "co",
-    "tscb": "tsc; cd build; browserify class/Main.js > index.js;rm -r class",
+    "tscb": "tsc; mkdir class; browserify class/Main.js > res/js/client.js;rm -r class",
     "tsc": "rm build/Main.js;tsc"
   },
-  "author": "",
+  "author": "Alberto Zanovello",
   "license": "ISC",
   "description": "",
   "dependencies": {
