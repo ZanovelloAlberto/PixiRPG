@@ -4,7 +4,7 @@
   "main": "src/.js",
   "github":"https://github.com/ZanovelloAlberto/PixiRPG",
   "scripts": {
-    "tscb": "tsc; mkdir class; browserify class/Main.js > res/js/client.js;rm -r class",
+    "build": "tsc; browserify build/class/Main.js > build/client.js;rm -r build/class",
     "tsc": "rm build/Main.js;tsc"
   },
   "author": "Alberto Zanovello",
