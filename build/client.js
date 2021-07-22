@@ -18,7 +18,7 @@ class Loading {
 }
 exports.Loading = Loading;
 
-},{"./Pixi":3,"pixi.js":56}],2:[function(require,module,exports){
+},{"./Pixi":3,"pixi.js":55}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pixi = void 0;
@@ -76,7 +76,7 @@ exports.Pixi = Pixi;
 Pixi.height = 200;
 Pixi.width = 200;
 
-},{"pixi.js":56}],4:[function(require,module,exports){
+},{"pixi.js":55}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Res = void 0;
@@ -125,7 +125,7 @@ Res.tilesize = 16;
 //     }
 // })
 
-},{"./mainMenu/MainMenu":13,"pixi.js":56}],5:[function(require,module,exports){
+},{"./mainMenu/MainMenu":12,"pixi.js":55}],5:[function(require,module,exports){
 "use strict";
 /*
     Tutto cio che è contenuto nella classe game è conivolto dalla ridimensione della finestra
@@ -156,7 +156,7 @@ Game.start = () => {
     return game;
 };
 
-},{"../Main":2,"./map/Map":6,"pixi.js":56}],6:[function(require,module,exports){
+},{"../Main":2,"./map/Map":6,"pixi.js":55}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Map = void 0;
@@ -166,7 +166,6 @@ exports.Map = void 0;
 */
 const pixi_js_1 = require("pixi.js");
 const Pixi_1 = require("../../Pixi");
-const NetPlayer_1 = require("./NetPlayer");
 const TileCollector_1 = require("./TileCollector");
 const Player_1 = require("./Player");
 class Map extends pixi_js_1.Container {
@@ -186,7 +185,7 @@ class Map extends pixi_js_1.Container {
         this.addChild(Map.tiles);
         Map.player = new Player_1.Player();
         this.addChild(Map.player);
-        Map.net = new NetPlayer_1.NetPlayer(Map.player);
+        //Map.net = new NetPlayer(Map.player)
         this.addChild(Map.net);
         this.x = -Map.player.x + Pixi_1.Pixi.width / 2;
         this.y = -Map.player.y + Pixi_1.Pixi.width / 2;
@@ -194,66 +193,7 @@ class Map extends pixi_js_1.Container {
 }
 exports.Map = Map;
 
-},{"../../Pixi":3,"./NetPlayer":7,"./Player":8,"./TileCollector":10,"pixi.js":56}],7:[function(require,module,exports){
-"use strict";
-/*  PROPOSITI
-    Forinire il nome del player appena entrato garantendo ad ogni client un aggiornamento del numero di utenti connessi
-    Segnalare gli utenti connessi
-    Segnalare gli utenti disconnessi
-    Aggiornare fornendo la posizione successiva, basandosi sulla posizione precedente calcolare l animazione
-
-
-*/
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.NetPlayer = void 0;
-const pixi_js_1 = require("pixi.js");
-const Player_1 = require("./Player");
-const Res_1 = require("../../Res");
-class NetPlayer extends pixi_js_1.Container {
-    constructor(p) {
-        super();
-        this.update = () => {
-            if (this.socket.readyState == WebSocket.OPEN) {
-                const a = getUser(this.player);
-                this.socket.send(a);
-            }
-        };
-        this.parse = (data) => {
-            const a = JSON.parse(data);
-            this.removeChildren();
-            this.addChild(this.person);
-            this.addChild(new pixi_js_1.Sprite(Res_1.Res.getnTile(31)));
-            a.forEach((element) => {
-                this.addChild(new Person(JSON.parse(element)));
-            });
-        };
-        this.player = p;
-        this.socket = new WebSocket("ws://79.54.246.112:4000");
-        this.socket.onmessage = (event) => {
-            this.parse(event.data);
-        };
-        this.person = new Person({ x: 477, y: 455, image: 0, skin: 0 });
-    }
-}
-exports.NetPlayer = NetPlayer;
-function getUser(p) {
-    return JSON.stringify({
-        image: p.state + p.direction * 3,
-        skin: Player_1.Player.char,
-        x: p.x,
-        y: p.y
-    });
-}
-class Person extends pixi_js_1.Sprite {
-    constructor(data) {
-        super(Res_1.Res.getChar(data.skin)[data.image]);
-        this.x = data.x;
-        this.y = data.y;
-        this.anchor.set(0.5, 0.8);
-    }
-}
-
-},{"../../Res":4,"./Player":8,"pixi.js":56}],8:[function(require,module,exports){
+},{"../../Pixi":3,"./Player":7,"./TileCollector":9,"pixi.js":55}],7:[function(require,module,exports){
 "use strict";
 /*
 
@@ -352,7 +292,7 @@ class Player extends pixi_js_1.Sprite {
 exports.Player = Player;
 Player.char = 0;
 
-},{"../../Res":4,"../map/Map":6,"pixi.js":56}],9:[function(require,module,exports){
+},{"../../Res":4,"../map/Map":6,"pixi.js":55}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tile = void 0;
@@ -381,7 +321,7 @@ class Tile extends pixi_js_1.Sprite {
 }
 exports.Tile = Tile;
 
-},{"../../Res":4,"pixi.js":56}],10:[function(require,module,exports){
+},{"../../Res":4,"pixi.js":55}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TileCollector = void 0;
@@ -423,7 +363,7 @@ class TileCollector extends pixi_js_1.Container {
 }
 exports.TileCollector = TileCollector;
 
-},{"../../Res":4,"./Tile":9,"pixi.js":56}],11:[function(require,module,exports){
+},{"../../Res":4,"./Tile":8,"pixi.js":55}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharChoose = void 0;
@@ -500,7 +440,7 @@ class CharChoose extends pixi_js_1.Container {
 }
 exports.CharChoose = CharChoose;
 
-},{"../Pixi":3,"../Res":4,"../game/map/Player":8,"pixi.js":56}],12:[function(require,module,exports){
+},{"../Pixi":3,"../Res":4,"../game/map/Player":7,"pixi.js":55}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginBtn = void 0;
@@ -529,7 +469,7 @@ class LoginBtn extends pixi_js_1.Text {
 }
 exports.LoginBtn = LoginBtn;
 
-},{"../Pixi":3,"pixi.js":56}],13:[function(require,module,exports){
+},{"../Pixi":3,"pixi.js":55}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MainMenu = void 0;
@@ -564,7 +504,7 @@ MainMenu.start = () => {
     Main_1.pixi.stage.addChild(new MainMenu());
 };
 
-},{"../Main":2,"../Pixi":3,"../Res":4,"../game/Game":5,"./CharChoose":11,"./LoginBtn":12,"pixi.js":56}],14:[function(require,module,exports){
+},{"../Main":2,"../Pixi":3,"../Res":4,"../game/Game":5,"./CharChoose":10,"./LoginBtn":11,"pixi.js":55}],13:[function(require,module,exports){
 /*!
  * @pixi/accessibility - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -1118,7 +1058,7 @@ exports.AccessibilityManager = AccessibilityManager;
 exports.accessibleTarget = accessibleTarget;
 
 
-},{"@pixi/display":19,"@pixi/utils":48}],15:[function(require,module,exports){
+},{"@pixi/display":18,"@pixi/utils":47}],14:[function(require,module,exports){
 /*!
  * @pixi/app - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -1393,7 +1333,7 @@ Application.registerPlugin(ResizePlugin);
 exports.Application = Application;
 
 
-},{"@pixi/core":18,"@pixi/display":19}],16:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/display":18}],15:[function(require,module,exports){
 /*!
  * @pixi/compressed-textures - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -2605,7 +2545,7 @@ exports.TYPES_TO_BYTES_PER_COMPONENT = TYPES_TO_BYTES_PER_COMPONENT;
 exports.TYPES_TO_BYTES_PER_PIXEL = TYPES_TO_BYTES_PER_PIXEL;
 
 
-},{"@pixi/constants":17,"@pixi/core":18,"@pixi/loaders":29,"@pixi/utils":48}],17:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/core":17,"@pixi/loaders":28,"@pixi/utils":47}],16:[function(require,module,exports){
 /*!
  * @pixi/constants - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -2775,7 +2715,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })(exports.MSAA_QUALITY || (exports.MSAA_QUALITY = {}));
 
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /*!
  * @pixi/core - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -14345,7 +14285,7 @@ exports.systems = systems;
 exports.uniformParsers = uniformParsers;
 
 
-},{"@pixi/constants":17,"@pixi/math":30,"@pixi/runner":39,"@pixi/settings":40,"@pixi/ticker":47,"@pixi/utils":48}],19:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/math":29,"@pixi/runner":38,"@pixi/settings":39,"@pixi/ticker":46,"@pixi/utils":47}],18:[function(require,module,exports){
 /*!
  * @pixi/display - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -16289,7 +16229,7 @@ exports.DisplayObject = DisplayObject;
 exports.TemporaryDisplayObject = TemporaryDisplayObject;
 
 
-},{"@pixi/math":30,"@pixi/settings":40,"@pixi/utils":48}],20:[function(require,module,exports){
+},{"@pixi/math":29,"@pixi/settings":39,"@pixi/utils":47}],19:[function(require,module,exports){
 /*!
  * @pixi/extract - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -16508,7 +16448,7 @@ var Extract = /** @class */ (function () {
 exports.Extract = Extract;
 
 
-},{"@pixi/core":18,"@pixi/math":30,"@pixi/utils":48}],21:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/math":29,"@pixi/utils":47}],20:[function(require,module,exports){
 /*!
  * @pixi/filter-alpha - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -16603,7 +16543,7 @@ var AlphaFilter = /** @class */ (function (_super) {
 exports.AlphaFilter = AlphaFilter;
 
 
-},{"@pixi/core":18}],22:[function(require,module,exports){
+},{"@pixi/core":17}],21:[function(require,module,exports){
 /*!
  * @pixi/filter-blur - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -17463,7 +17403,7 @@ exports.BlurFilter = BlurFilter;
 exports.BlurFilterPass = BlurFilterPass;
 
 
-},{"@pixi/core":18,"@pixi/settings":40}],23:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/settings":39}],22:[function(require,module,exports){
 /*!
  * @pixi/filter-color-matrix - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -18001,7 +17941,7 @@ ColorMatrixFilter.prototype.grayscale = ColorMatrixFilter.prototype.greyscale;
 exports.ColorMatrixFilter = ColorMatrixFilter;
 
 
-},{"@pixi/core":18}],24:[function(require,module,exports){
+},{"@pixi/core":17}],23:[function(require,module,exports){
 /*!
  * @pixi/filter-displacement - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -18142,7 +18082,7 @@ var DisplacementFilter = /** @class */ (function (_super) {
 exports.DisplacementFilter = DisplacementFilter;
 
 
-},{"@pixi/core":18,"@pixi/math":30}],25:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/math":29}],24:[function(require,module,exports){
 /*!
  * @pixi/filter-fxaa - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -18212,7 +18152,7 @@ var FXAAFilter = /** @class */ (function (_super) {
 exports.FXAAFilter = FXAAFilter;
 
 
-},{"@pixi/core":18}],26:[function(require,module,exports){
+},{"@pixi/core":17}],25:[function(require,module,exports){
 /*!
  * @pixi/filter-noise - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -18321,7 +18261,7 @@ var NoiseFilter = /** @class */ (function (_super) {
 exports.NoiseFilter = NoiseFilter;
 
 
-},{"@pixi/core":18}],27:[function(require,module,exports){
+},{"@pixi/core":17}],26:[function(require,module,exports){
 /*!
  * @pixi/graphics - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -21491,7 +21431,7 @@ exports.LineStyle = LineStyle;
 exports.graphicsUtils = graphicsUtils;
 
 
-},{"@pixi/constants":17,"@pixi/core":18,"@pixi/display":19,"@pixi/math":30,"@pixi/utils":48}],28:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/core":17,"@pixi/display":18,"@pixi/math":29,"@pixi/utils":47}],27:[function(require,module,exports){
 /*!
  * @pixi/interaction - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -23720,7 +23660,7 @@ exports.InteractionTrackingData = InteractionTrackingData;
 exports.interactiveTarget = interactiveTarget;
 
 
-},{"@pixi/display":19,"@pixi/math":30,"@pixi/ticker":47,"@pixi/utils":48}],29:[function(require,module,exports){
+},{"@pixi/display":18,"@pixi/math":29,"@pixi/ticker":46,"@pixi/utils":47}],28:[function(require,module,exports){
 /*!
  * @pixi/loaders - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -24074,7 +24014,7 @@ exports.LoaderResource = LoaderResource;
 exports.TextureLoader = TextureLoader;
 
 
-},{"@pixi/core":18,"resource-loader":63}],30:[function(require,module,exports){
+},{"@pixi/core":17,"resource-loader":62}],29:[function(require,module,exports){
 /*!
  * @pixi/math - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -25961,7 +25901,7 @@ exports.Transform = Transform;
 exports.groupD8 = groupD8;
 
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /*!
  * @pixi/mesh-extras - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -26701,7 +26641,7 @@ exports.SimplePlane = SimplePlane;
 exports.SimpleRope = SimpleRope;
 
 
-},{"@pixi/constants":17,"@pixi/core":18,"@pixi/mesh":32}],32:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/core":17,"@pixi/mesh":31}],31:[function(require,module,exports){
 /*!
  * @pixi/mesh - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -27434,7 +27374,7 @@ exports.MeshGeometry = MeshGeometry;
 exports.MeshMaterial = MeshMaterial;
 
 
-},{"@pixi/constants":17,"@pixi/core":18,"@pixi/display":19,"@pixi/math":30,"@pixi/settings":40,"@pixi/utils":48}],33:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/core":17,"@pixi/display":18,"@pixi/math":29,"@pixi/settings":39,"@pixi/utils":47}],32:[function(require,module,exports){
 /*!
  * @pixi/mixin-cache-as-bitmap - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -27803,7 +27743,7 @@ display.DisplayObject.prototype._cacheAsBitmapDestroy = function _cacheAsBitmapD
 exports.CacheData = CacheData;
 
 
-},{"@pixi/core":18,"@pixi/display":19,"@pixi/math":30,"@pixi/settings":40,"@pixi/sprite":43,"@pixi/utils":48}],34:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/display":18,"@pixi/math":29,"@pixi/settings":39,"@pixi/sprite":42,"@pixi/utils":47}],33:[function(require,module,exports){
 /*!
  * @pixi/mixin-get-child-by-name - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -27855,7 +27795,7 @@ display.Container.prototype.getChildByName = function getChildByName(name, deep)
 };
 
 
-},{"@pixi/display":19}],35:[function(require,module,exports){
+},{"@pixi/display":18}],34:[function(require,module,exports){
 /*!
  * @pixi/mixin-get-global-position - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -27893,7 +27833,7 @@ display.DisplayObject.prototype.getGlobalPosition = function getGlobalPosition(p
 };
 
 
-},{"@pixi/display":19,"@pixi/math":30}],36:[function(require,module,exports){
+},{"@pixi/display":18,"@pixi/math":29}],35:[function(require,module,exports){
 /*!
  * @pixi/particles - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -28710,7 +28650,7 @@ exports.ParticleContainer = ParticleContainer;
 exports.ParticleRenderer = ParticleRenderer;
 
 
-},{"@pixi/constants":17,"@pixi/core":18,"@pixi/display":19,"@pixi/math":30,"@pixi/utils":48}],37:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/core":17,"@pixi/display":18,"@pixi/math":29,"@pixi/utils":47}],36:[function(require,module,exports){
 /*!
  * @pixi/polyfill - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -28829,7 +28769,7 @@ if (!self.Int32Array) {
 }
 
 
-},{"object-assign":54,"promise-polyfill":58}],38:[function(require,module,exports){
+},{"object-assign":53,"promise-polyfill":57}],37:[function(require,module,exports){
 /*!
  * @pixi/prepare - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -29472,7 +29412,7 @@ exports.Prepare = Prepare;
 exports.TimeLimiter = TimeLimiter;
 
 
-},{"@pixi/core":18,"@pixi/display":19,"@pixi/graphics":27,"@pixi/settings":40,"@pixi/text":46,"@pixi/ticker":47}],39:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/display":18,"@pixi/graphics":26,"@pixi/settings":39,"@pixi/text":45,"@pixi/ticker":46}],38:[function(require,module,exports){
 /*!
  * @pixi/runner - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -29676,7 +29616,7 @@ Object.defineProperties(Runner.prototype, {
 exports.Runner = Runner;
 
 
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /*!
  * @pixi/settings - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -30425,7 +30365,7 @@ exports.isMobile = isMobile;
 exports.settings = settings;
 
 
-},{"ismobilejs":51}],41:[function(require,module,exports){
+},{"ismobilejs":50}],40:[function(require,module,exports){
 /*!
  * @pixi/sprite-animated - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -30902,7 +30842,7 @@ var AnimatedSprite = /** @class */ (function (_super) {
 exports.AnimatedSprite = AnimatedSprite;
 
 
-},{"@pixi/core":18,"@pixi/sprite":43,"@pixi/ticker":47}],42:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/sprite":42,"@pixi/ticker":46}],41:[function(require,module,exports){
 /*!
  * @pixi/sprite-tiling - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -31318,7 +31258,7 @@ exports.TilingSprite = TilingSprite;
 exports.TilingSpriteRenderer = TilingSpriteRenderer;
 
 
-},{"@pixi/constants":17,"@pixi/core":18,"@pixi/math":30,"@pixi/sprite":43,"@pixi/utils":48}],43:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/core":17,"@pixi/math":29,"@pixi/sprite":42,"@pixi/utils":47}],42:[function(require,module,exports){
 /*!
  * @pixi/sprite - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -31913,7 +31853,7 @@ var Sprite = /** @class */ (function (_super) {
 exports.Sprite = Sprite;
 
 
-},{"@pixi/constants":17,"@pixi/core":18,"@pixi/display":19,"@pixi/math":30,"@pixi/settings":40,"@pixi/utils":48}],44:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/core":17,"@pixi/display":18,"@pixi/math":29,"@pixi/settings":39,"@pixi/utils":47}],43:[function(require,module,exports){
 /*!
  * @pixi/spritesheet - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -32313,7 +32253,7 @@ exports.Spritesheet = Spritesheet;
 exports.SpritesheetLoader = SpritesheetLoader;
 
 
-},{"@pixi/core":18,"@pixi/loaders":29,"@pixi/math":30,"@pixi/utils":48}],45:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/loaders":28,"@pixi/math":29,"@pixi/utils":47}],44:[function(require,module,exports){
 /*!
  * @pixi/text-bitmap - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -34107,7 +34047,7 @@ exports.BitmapFontLoader = BitmapFontLoader;
 exports.BitmapText = BitmapText;
 
 
-},{"@pixi/core":18,"@pixi/display":19,"@pixi/loaders":29,"@pixi/math":30,"@pixi/mesh":32,"@pixi/settings":40,"@pixi/text":46,"@pixi/utils":48}],46:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/display":18,"@pixi/loaders":28,"@pixi/math":29,"@pixi/mesh":31,"@pixi/settings":39,"@pixi/text":45,"@pixi/utils":47}],45:[function(require,module,exports){
 /*!
  * @pixi/text - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -36193,7 +36133,7 @@ exports.TextMetrics = TextMetrics;
 exports.TextStyle = TextStyle;
 
 
-},{"@pixi/core":18,"@pixi/math":30,"@pixi/settings":40,"@pixi/sprite":43,"@pixi/utils":48}],47:[function(require,module,exports){
+},{"@pixi/core":17,"@pixi/math":29,"@pixi/settings":39,"@pixi/sprite":42,"@pixi/utils":47}],46:[function(require,module,exports){
 /*!
  * @pixi/ticker - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -36946,7 +36886,7 @@ exports.Ticker = Ticker;
 exports.TickerPlugin = TickerPlugin;
 
 
-},{"@pixi/settings":40}],48:[function(require,module,exports){
+},{"@pixi/settings":39}],47:[function(require,module,exports){
 /*!
  * @pixi/utils - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -38184,7 +38124,7 @@ exports.uid = uid;
 exports.url = url;
 
 
-},{"@pixi/constants":17,"@pixi/settings":40,"earcut":49,"eventemitter3":50,"url":65}],49:[function(require,module,exports){
+},{"@pixi/constants":16,"@pixi/settings":39,"earcut":48,"eventemitter3":49,"url":64}],48:[function(require,module,exports){
 'use strict';
 
 module.exports = earcut;
@@ -38865,7 +38805,7 @@ earcut.flatten = function (data) {
     return result;
 };
 
-},{}],50:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 'use strict';
 
 var has = Object.prototype.hasOwnProperty
@@ -39203,7 +39143,7 @@ if ('undefined' !== typeof module) {
   module.exports = EventEmitter;
 }
 
-},{}],51:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
@@ -39213,7 +39153,7 @@ __export(require("./isMobile"));
 var isMobile_1 = require("./isMobile");
 exports["default"] = isMobile_1["default"];
 
-},{"./isMobile":52}],52:[function(require,module,exports){
+},{"./isMobile":51}],51:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
 var appleIphone = /iPhone/i;
@@ -39342,7 +39282,7 @@ function isMobile(param) {
 }
 exports["default"] = isMobile;
 
-},{}],53:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -39509,7 +39449,7 @@ MiniSignal.MiniSignalBinding = MiniSignalBinding;
 exports['default'] = MiniSignal;
 module.exports = exports['default'];
 
-},{}],54:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -39601,7 +39541,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],55:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 'use strict'
 
 function parseURI (str, opts) {
@@ -39652,7 +39592,7 @@ function parseURI (str, opts) {
 
 module.exports = parseURI
 
-},{}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 /*!
  * pixi.js - v6.0.4
  * Compiled Tue, 11 May 2021 18:00:23 UTC
@@ -39964,7 +39904,7 @@ exports.VERSION = VERSION;
 exports.filters = filters;
 
 
-},{"@pixi/accessibility":14,"@pixi/app":15,"@pixi/compressed-textures":16,"@pixi/constants":17,"@pixi/core":18,"@pixi/display":19,"@pixi/extract":20,"@pixi/filter-alpha":21,"@pixi/filter-blur":22,"@pixi/filter-color-matrix":23,"@pixi/filter-displacement":24,"@pixi/filter-fxaa":25,"@pixi/filter-noise":26,"@pixi/graphics":27,"@pixi/interaction":28,"@pixi/loaders":29,"@pixi/math":30,"@pixi/mesh":32,"@pixi/mesh-extras":31,"@pixi/mixin-cache-as-bitmap":33,"@pixi/mixin-get-child-by-name":34,"@pixi/mixin-get-global-position":35,"@pixi/particles":36,"@pixi/polyfill":37,"@pixi/prepare":38,"@pixi/runner":39,"@pixi/settings":40,"@pixi/sprite":43,"@pixi/sprite-animated":41,"@pixi/sprite-tiling":42,"@pixi/spritesheet":44,"@pixi/text":46,"@pixi/text-bitmap":45,"@pixi/ticker":47,"@pixi/utils":48}],57:[function(require,module,exports){
+},{"@pixi/accessibility":13,"@pixi/app":14,"@pixi/compressed-textures":15,"@pixi/constants":16,"@pixi/core":17,"@pixi/display":18,"@pixi/extract":19,"@pixi/filter-alpha":20,"@pixi/filter-blur":21,"@pixi/filter-color-matrix":22,"@pixi/filter-displacement":23,"@pixi/filter-fxaa":24,"@pixi/filter-noise":25,"@pixi/graphics":26,"@pixi/interaction":27,"@pixi/loaders":28,"@pixi/math":29,"@pixi/mesh":31,"@pixi/mesh-extras":30,"@pixi/mixin-cache-as-bitmap":32,"@pixi/mixin-get-child-by-name":33,"@pixi/mixin-get-global-position":34,"@pixi/particles":35,"@pixi/polyfill":36,"@pixi/prepare":37,"@pixi/runner":38,"@pixi/settings":39,"@pixi/sprite":42,"@pixi/sprite-animated":40,"@pixi/sprite-tiling":41,"@pixi/spritesheet":43,"@pixi/text":45,"@pixi/text-bitmap":44,"@pixi/ticker":46,"@pixi/utils":47}],56:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -40150,7 +40090,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],58:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 (function (setImmediate){(function (){
 'use strict';
 
@@ -40478,7 +40418,7 @@ Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
 module.exports = Promise;
 
 }).call(this)}).call(this,require("timers").setImmediate)
-},{"timers":64}],59:[function(require,module,exports){
+},{"timers":63}],58:[function(require,module,exports){
 (function (global){(function (){
 /*! https://mths.be/punycode v1.3.2 by @mathias */
 ;(function(root) {
@@ -41012,7 +40952,7 @@ module.exports = Promise;
 }(this));
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],60:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -41098,7 +41038,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],61:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -41185,13 +41125,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],62:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":60,"./encode":61}],63:[function(require,module,exports){
+},{"./decode":59,"./encode":60}],62:[function(require,module,exports){
 /*!
  * resource-loader - v3.0.1
  * https://github.com/pixijs/pixi-sound
@@ -43542,7 +43482,7 @@ exports.encodeBinary = encodeBinary;
 exports.middleware = index;
 
 
-},{"mini-signals":53,"parse-uri":55}],64:[function(require,module,exports){
+},{"mini-signals":52,"parse-uri":54}],63:[function(require,module,exports){
 (function (setImmediate,clearImmediate){(function (){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -43621,7 +43561,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":57,"timers":64}],65:[function(require,module,exports){
+},{"process/browser.js":56,"timers":63}],64:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -44355,7 +44295,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":66,"punycode":59,"querystring":62}],66:[function(require,module,exports){
+},{"./util":65,"punycode":58,"querystring":61}],65:[function(require,module,exports){
 'use strict';
 
 module.exports = {
