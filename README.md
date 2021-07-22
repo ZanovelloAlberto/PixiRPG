@@ -1,45 +1,9 @@
 # PIXI.JS GAME
+### [Game Working](https://zanovelloalberto.github.io/PixiRPG/)
 ### Compile
 * write typescritpt code on folder "/src"
-* compile typescript running 'npm run tscb'
+* compile typescript running 'npm run build'
 * open html file "/res/index" to visualize the contente of the page
-----
-### Folder Struct
-```
-PixiRPG
-├─ README.md
-├─ package.json
-├─ res
-│  ├─ Maps
-│  │  └─ sqare.json
-│  ├─ img
-│  │  ├─ basictiles.png
-│  │  └─ characters.png
-│  ├─ index.html
-│  └─ js
-│     └─ mapCreator.js
-├─ src
-│  ├─ Loading.ts
-│  ├─ Main.ts
-│  ├─ Pixi.ts
-│  ├─ Res.ts
-│  ├─ game
-│  │  ├─ Game.ts
-│  │  └─ map
-│  │     ├─ Map.ts
-│  │     ├─ NetPlayer.ts
-│  │     ├─ Player.ts
-│  │     ├─ Tile.ts
-│  │     └─ TileCollector.ts
-│  ├─ mainMenu
-│  │  ├─ CharChoose.ts
-│  │  ├─ LoginBtn.ts
-│  │  └─ MainMenu.ts
-│  └─ tool
-│     └─ Image.ts
-└─ tsconfig.json
-
-```
 
 
 # Founders
