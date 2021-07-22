@@ -1,5 +1,9 @@
 .git
 node_modules
 test
-build
+src
 .vscode
+.github
+package-lock.json
+package.json
+tsconfig.json

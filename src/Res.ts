@@ -24,9 +24,9 @@ export class Res extends Loader {
     constructor() {
         super();
         
-        this.add('tile', 'img/basictiles.png')
-        this.add('char', 'img/characters.png')
-        this.add('sqare', 'Maps/sqare.json')
+        this.add('tile', 'res/img/basictiles.png')
+        this.add('char', 'res/img/characters.png')
+        this.add('sqare', 'res/maps/sqare.json')
         this.load((loader, resources) => {
             Res.resource = resources;
             setTimeout(MainMenu.start,2000)
