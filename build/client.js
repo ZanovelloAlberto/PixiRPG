@@ -176,9 +176,9 @@ class Map extends pixi_js_1.Container {
             //console.log(Map.tiles.getTile(1,10).nvalue)
             this.x = -Map.player.x + Pixi_1.Pixi.width / 2;
             this.y = -Map.player.y + Pixi_1.Pixi.width / 2;
-            if (Map.net) {
-                Map.net.update();
-            }
+            // if(Map.net){
+            //     Map.net.update()
+            // }
             //console.log('cotainer', this.x,this.y)
         };
         Map.tiles = new TileCollector_1.TileCollector("sqare");
@@ -186,7 +186,7 @@ class Map extends pixi_js_1.Container {
         Map.player = new Player_1.Player();
         this.addChild(Map.player);
         //Map.net = new NetPlayer(Map.player)
-        this.addChild(Map.net);
+        //this.addChild(Map.net)
         this.x = -Map.player.x + Pixi_1.Pixi.width / 2;
         this.y = -Map.player.y + Pixi_1.Pixi.width / 2;
     }
