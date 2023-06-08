@@ -6,15 +6,6 @@
 * open html file "/res/index" to visualize the contente of the page
 
 
-# Founders
-* [Alberto Zanovello](https://github.com/ZanovelloAlberto/)
-
-# Contributors
-* Bin Hu
-* [Gianluca Beltrame](https://github.com/GianlucaBeltrame)
-* Riccardo Bragagnolo
-* [Nicolò Trinca](https://github.com/nikxtr)
-
 
 # Image of Game
 
