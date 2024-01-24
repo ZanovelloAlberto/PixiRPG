@@ -1,5 +1,5 @@
 # PIXI.JS GAME
-### [Game Working](https://zanovelloalberto.github.io/PixiRPG/)
+### [Click here to play](https://zanovelloalberto.github.io/PixiRPG/)
 ### Compile
 * write typescritpt code on folder "/src"
 * compile typescript running 'npm run build'
