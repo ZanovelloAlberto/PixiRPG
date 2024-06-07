@@ -5,7 +5,8 @@
   "github":"https://github.com/ZanovelloAlberto/PixiRPG",
   "scripts": {
     "build": "tsc; browserify build/class/Main.js > build/client.js;rm -r build/class",
-    "tsc": "rm build/Main.js;tsc"
+    "tsc": "rm build/Main.js;tsc",
+    "serve": "miniserve build"
   },
   "author": "Alberto Zanovello",
   "license": "ISC",
@@ -13,9 +14,7 @@
   "dependencies": {
     "@types/node": "^15.12.2",
     "browserify": "^17.0.0",
-    "install": "^0.13.0",
     "pixi.js": "^6.0.4",
-    "tsc": "^2.0.3",
     "typescript": "^4.3.2"
   }
 }
